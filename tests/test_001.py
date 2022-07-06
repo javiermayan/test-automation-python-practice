@@ -3,4 +3,5 @@ Run these tests after completing the setup steps to verify that the framework wo
 """
 
 def test_the_tests():
+  print("Test en ejecución...")
   assert True
