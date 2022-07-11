@@ -32,20 +32,5 @@ jobs:
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
     - name: Test with pytest
       run: |
-        pytest --alluredir=allure-results --browser chrome_headless
-    - name: Allure results
-      uses: simple-elf/allure-report-action@master
-      if: always()
-      id: allure-report
-      with:
-        allure_results: allure-results
-        allure_report: allure-report
-        gh_pages: gh-pages
-        allure_history: allure-history
-    - name: Deploy report to Github Pages
-      if: always()
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        PUBLISH_BRANCH: gh-pages
-        PUBLISH_DIR: allure-history
+        pytest --alluredir=/home/runner/work/test-automation-python-practice/test-automation-python-practice/reports
+        allure serve /home/runner/work/test-automation-python-practice/test-automation-python-practice/reports
