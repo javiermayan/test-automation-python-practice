@@ -6,36 +6,36 @@ on:
     - cron: '0 */4 * * *'
 
 jobs:
-  selenium_tests:
+  build:
 
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-      - name: 🐍 Step 1 - Set up Python 3.9
-        uses: actions/setup-python@v1
+      - uses: actions/checkout@v3
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v3
         with:
           python-version: 3.9
-      - name: 🔗 Step 2 - Install dependencies
+      - name: Python Dependency Installation
+        uses: py-actions/py-dependency-install@v3.0.0
+      - name: Install plugin
+        run: pip install pytest-github-actions-annotate-failures
+      - name: Test with pytest
         run: |
-          python -m pip install --upgrade pip
-          pip install pipenv
-          pipenv install --deploy --system
-          brew update
-          brew install allure
-        working-directory: {name of your project root here}
-      - name: 📂 Step 3 - Create a temp artifact folder named `output`
-        run: |
-          mkdir output
-      - name: 🦊 Step 4 - Run Firefox tests and generate Allure folder inside `output` folder
-        run: |
-          pytest -vs tests/ --browser firefox --alluredir={provide the directory where you want the allure folder to go}
-        working-directory: {name of your project root here}
-      - name: 📊 Step 5 - Collect Allure files and generate allure-report folder
-        run: |
-          allure generate output/
-      - name: 🎁 Step 6 - Publishing Allure artifact to GitHub Actions
-        uses: actions/upload-artifact@v2
+          pytest --alluredir=allure-results --browser chrome_headless
+      - name: Allure results
+        uses: simple-elf/allure-report-action@master
+        if: always()
+        id: allure-report
         with:
-          name: allure-report
-          path: allure-report
+          allure_results: allure-results
+          allure_report: allure-report
+          gh_pages: gh-pages
+          allure_history: allure-history
+      - name: Deploy report to Github Pages
+        if: always()
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PUBLISH_BRANCH: gh-pages
+          PUBLISH_DIR: allure-history
