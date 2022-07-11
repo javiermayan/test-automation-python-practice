@@ -32,5 +32,8 @@ jobs:
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
     - name: Test with pytest
       run: |
-        pytest --alluredir=/home/runner/work/test-automation-python-practice/test-automation-python-practice/reports
-        allure serve /home/runner/work/test-automation-python-practice/test-automation-python-practice/reports
+        pytest
+    - name: coverage
+      run: |
+        coverage run -m pytest
+        coverage report --fail-under=50
