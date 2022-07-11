@@ -1,4 +1,4 @@
-name: Python tests using allure example.
+name: Pytest allure Github Pages
 
 on:
   workflow_dispatch:
