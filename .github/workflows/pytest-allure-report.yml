@@ -1,4 +1,5 @@
-name: Python tests using allure example.
+
+name: Pytest Allure report
 
 on: workflow_dispatch
 
@@ -6,37 +7,27 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10"]
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up Python 3.10
-      uses: actions/setup-python@v3
-      with:
-        python-version: "3.10"
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install flake8 pytest allure-pytest
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    - name: Lint with flake8
-      run: |
-        # stop the build if there are Python syntax errors or undefined names
-        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-        working-directory: /home/runner/work/test-automation-python-practice/test-automation-python-practice
-    - name: 📂 Step 3 - Create a temp artifact folder named `output`
-      run: |
-        mkdir output
-    - name: 🦊 Step 4 - Run Firefox tests and generate Allure folder inside `output` folder
-      run: |
-        pytest -vs tests/ --browser firefox --alluredir=allure-results
-      working-directory: /home/runner/work/test-automation-python-practice/test-automation-python-practice
-    - name: 📊 Step 5 - Collect Allure files and generate allure-report folder
-      run: |
-        allure generate output/
-    - name: 🎁 Step 6 - Publishing Allure artifact to GitHub Actions
-      uses: actions/upload-artifact@v2
-      with:
-        name: allure-report
-        path: allure-report
+      - uses: actions/checkout@v3
+      - name: Setup Python # Set Python version
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      # Install pip and pytest
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest allure-pytest
+      - name: Test with pytest
+        run: pytest --doctest-modules --alluredir=allure-results
+      - name: Upload pytest test results
+        uses: actions/upload-artifact@v3
+        with:
+          name: pytest-results-${{ matrix.python-version }}
+          path: allure-report
+        # Use always() to always run this step to publish test results when there are test failures
+        if: ${{ always() }}
