@@ -7,8 +7,8 @@ class Ayuda(unittest.TestCase):
 
     def setUp(self):
         global driver
-        s = Service("../Drivers/chromedriver")
-        driver = webdriver.Chrome(service=s)
+        #s = Service("../Drivers/chromedriver")
+        #driver = webdriver.Chrome(service=s)
         driver.maximize_window()
         driver.get("https://www.google.com")
 
