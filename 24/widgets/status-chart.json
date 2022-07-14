@@ -1,0 +1,1 @@
+[{"uid":"d572fe9fbb7673ad","name":"test_site_title","time":{"start":1657831041449,"stop":1657831042960,"duration":1511},"status":"broken","severity":"normal"},{"uid":"beec529e99322af5","name":"test_the_tests","time":{"start":1657831041419,"stop":1657831041419,"duration":0},"status":"failed","severity":"normal"}]
