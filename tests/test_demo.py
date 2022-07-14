@@ -1,26 +1,40 @@
-"""
-Run these tests after completing the setup steps to verify that the framework works.
-"""
-
-def test_the_tests():
-  print("Corriendo test de prueba...")
-  assert True
-
-  assert 2==3
-
-
-"""
-This script will open the Qxf2 website and verify its title
-"""
+import unittest
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+import time
 
-site_url = 'https://qxf2.com/'
+class Ayuda(unittest.TestCase):
+
+    def setUp(self):
+        global driver
+        s = Service("../Drivers/chromedriver")
+        driver = webdriver.Chrome(service=s)
+        driver.maximize_window()
+        driver.get("https://www.google.com")
+
+    def test_site_title(self):
+        time.sleep(5)  # Let the user actually see something!
+        assert driver.title == 'Google'
+
+        '''
+        service.start()
+
+        driver = webdriver.Remote(service.service_url)
+        '''
 
 
-def test_site_title():
-  "Checks Qxf2's website title"
-  driver = webdriver.Chrome()
-  driver.get(site_url)
-  assert driver.title == 'Qxf2 Services: Outsourced Software QA for startups'
 
+    def test_the_tests(self):
+        print("Corriendo test de prueba...")
+        assert True
+
+        assert 2 == 3
+
+    def tearDown(self):
+        driver.quit()
+
+if __name__ == "__main__":
+    unittest.main()
+
+#driver.get("https://www.userapp.dev.mfs-merchants.io")
 
