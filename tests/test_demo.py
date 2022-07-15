@@ -7,9 +7,11 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 '''
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service as ChromiumService
+from selenium.webdriver.chrome.service import Service as ChromiumService, Service
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.core.utils import ChromeType
+from selenium.webdriver.chrome.options import Options
+#from selenium.webdriver.chrome.service import Service
 
 '''
 from selenium import webdriver
@@ -32,12 +34,12 @@ class Ayuda(unittest.TestCase):
         driver_path = ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()
         driver = webdriver.Chrome(driver_path)
         driver.maximize_window()
-        '''
+        
         driver = webdriver.Chrome(
             service=ChromiumService(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()))
         '''
-        chrome_service = Service(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install())
-                
+        #chrome_service = Service(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install())
+
         chrome_options = Options()
         options = [
             "--headless",
@@ -51,8 +53,10 @@ class Ayuda(unittest.TestCase):
         for option in options:
             chrome_options.add_argument(option)
 
-        driver = webdriver.Chrome(service=chrome_service, options=chrome_options)
-        '''
+        #driver = webdriver.Chrome(service=chrome_service, options=chrome_options)
+        driver = webdriver.Chrome(
+            service=ChromiumService(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()))
+
         driver.get("https://www.google.com")
         print(driver.title)
 
@@ -73,5 +77,5 @@ class Ayuda(unittest.TestCase):
 if __name__ == "__main__":
     unittest.main()
 
-#driver.get("https://www.userapp.dev.mfs-merchants.io")
+
 
