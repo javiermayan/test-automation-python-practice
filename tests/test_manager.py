@@ -1,10 +1,11 @@
-# selenium 4
+import unittest
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service as ChromiumService
-from webdriver_manager.chrome import ChromeDriverManager
-from webdriver_manager.core.utils import ChromeType
+from selenium.webdriver.chrome.service import Service
+#from selenium.webdriver.chrome.service import Service as ChromiumService
+#from webdriver_manager.chrome import ChromeDriverManager
+#from webdriver_manager.core.utils import ChromeType
 
-driver = webdriver.Chrome(service=ChromiumService(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()))
+#driver = webdriver.Chrome(service=ChromiumService(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()))
 
 '''
 chrome_service = Service(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install())
@@ -24,5 +25,10 @@ for option in options:
 
 driver = webdriver.Chrome(service=chrome_service, options=chrome_options)
 '''
+s = Service("../Drivers/chromedriver")
+driver = webdriver.Chrome(service=s)
+driver.maximize_window()
+
 driver.get('https://www.google.com')
 print(driver.title)
+driver.quit()
