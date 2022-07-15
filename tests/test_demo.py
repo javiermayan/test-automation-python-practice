@@ -2,13 +2,18 @@ import unittest
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 import time
+from selenium.webdriver.chrome.service import Service as ChromeService
+from webdriver_manager.chrome import ChromeDriverManager
+
+
 
 class Ayuda(unittest.TestCase):
 
     def setUp(self):
         global driver
-        s = Service("../Drivers/chromedriver")
-        driver = webdriver.Chrome(service=s)
+        #s = Service("../Drivers/chromedriver")
+        #driver = webdriver.Chrome(service=s)
+        driver = webdriver.Chrome(ChromeDriverManager().install())
         driver.maximize_window()
         driver.get("https://www.google.com")
 
@@ -16,11 +21,7 @@ class Ayuda(unittest.TestCase):
         time.sleep(5)  # Let the user actually see something!
         assert driver.title == 'Google'
 
-        '''
-        service.start()
 
-        driver = webdriver.Remote(service.service_url)
-        '''
 
 
 
