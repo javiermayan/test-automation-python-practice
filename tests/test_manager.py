@@ -37,23 +37,30 @@ s = Service("../Drivers/chromedriver")
 driver = webdriver.Chrome(service=s)
 driver.maximize_window()
 
-# to start recording
-#@allure.step("start_recording")
-#recorder.start_recording("recording_prueba_02.mp4", 10)
-recorder.start_recording(str(filename + "mp4"), 10)
-# 'recording.mp4' is the name of the output video file, may also contain full path like 'C:/Users/<user>/Videos/video.mp4'
-# the second parameter(10) is the FPS. You can specify the FPS for the screen recording using the second parameter. It must not be greater than 60.
 
-driver.get('https://www.google.com')
-print(driver.title)
+def test_site_title():
 
-# to pause recording
-#recorder.pause_recording()
+    # to start recording
+    #@allure.step("start_recording")
+    recorder.start_recording("recording_prueba_07-09-22.mp4", 10)
+    #recorder.start_recording(str(filename + "mp4"), 10)
 
-# to resume recording
-#recorder.resume_recording()
+    # 'recording.mp4' is the name of the output video file, may also contain full path like 'C:/Users/<user>/Videos/video.mp4'
+    # the second parameter(10) is the FPS. You can specify the FPS for the screen recording using the second parameter. It must not be greater than 60.
 
-# to stop recording
-recorder.stop_recording()
-allure.attach(filename, name="Video", attachment_type=AttachmentType.MP4)
-driver.quit()
+    driver.get('https://www.google.com')
+    assert driver.title == 'Google'
+    #driver.get("http://www.python.org")
+    #assert "Python" in driver.title
+    print(driver.title)
+
+    # to pause recording
+    #recorder.pause_recording()
+
+    # to resume recording
+    #recorder.resume_recording()
+
+    # to stop recording
+    recorder.stop_recording()
+    allure.attach(filename, name="Video", attachment_type=AttachmentType.MP4)
+    driver.quit()
