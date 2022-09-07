@@ -1,9 +1,10 @@
 import unittest
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
-#from selenium.webdriver.chrome.service import Service as ChromiumService
-#from webdriver_manager.chrome import ChromeDriverManager
-#from webdriver_manager.core.utils import ChromeType
+from selenium.webdriver.chrome.service import Service as ChromiumService
+from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.core.utils import ChromeType
+from selenium.webdriver.chrome.options import Options
 import pyscreenrec
 import allure
 from allure_commons.types import AttachmentType
@@ -11,7 +12,7 @@ import os
 
 #driver = webdriver.Chrome(service=ChromiumService(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()))
 
-'''
+#------- config browser actions
 chrome_service = Service(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install())
 
 chrome_options = Options()
@@ -28,15 +29,16 @@ for option in options:
     chrome_options.add_argument(option)
 
 driver = webdriver.Chrome(service=chrome_service, options=chrome_options)
-'''
+#---------------
 
 filename = os.path.basename(__file__)
 recorder = pyscreenrec.ScreenRecorder()
 
+'''
 s = Service("../Drivers/chromedriver")
 driver = webdriver.Chrome(service=s)
 driver.maximize_window()
-
+'''
 
 def test_site_title():
 
