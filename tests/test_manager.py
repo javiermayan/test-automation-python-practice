@@ -5,6 +5,9 @@ from selenium.webdriver.chrome.service import Service
 #from webdriver_manager.chrome import ChromeDriverManager
 #from webdriver_manager.core.utils import ChromeType
 import pyscreenrec
+import allure
+from allure_commons.types import AttachmentType
+import os
 
 #driver = webdriver.Chrome(service=ChromiumService(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()))
 
@@ -26,6 +29,8 @@ for option in options:
 
 driver = webdriver.Chrome(service=chrome_service, options=chrome_options)
 '''
+
+filename = os.path.basename(__file__)
 recorder = pyscreenrec.ScreenRecorder()
 
 s = Service("../Drivers/chromedriver")
@@ -33,7 +38,9 @@ driver = webdriver.Chrome(service=s)
 driver.maximize_window()
 
 # to start recording
-recorder.start_recording("recording.mp4", 10)
+#@allure.step("start_recording")
+#recorder.start_recording("recording_prueba_02.mp4", 10)
+recorder.start_recording(str(filename + "mp4"), 10)
 # 'recording.mp4' is the name of the output video file, may also contain full path like 'C:/Users/<user>/Videos/video.mp4'
 # the second parameter(10) is the FPS. You can specify the FPS for the screen recording using the second parameter. It must not be greater than 60.
 
@@ -48,4 +55,5 @@ print(driver.title)
 
 # to stop recording
 recorder.stop_recording()
+allure.attach(filename, name="Video", attachment_type=AttachmentType.MP4)
 driver.quit()
